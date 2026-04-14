@@ -1,0 +1,99 @@
+<?php
+session_start();
+
+// Get salary data
+$basic = $_POST['basic'];
+$da = $_POST['da'];
+$hra = $_POST['hra'];
+
+// Store in session
+$_SESSION['basic'] = $basic;
+$_SESSION['da'] = $da;
+$_SESSION['hra'] = $hra;
+
+// Calculate total
+$total = $basic + $da + $hra;
+?>
+
+<h2>Employee Final Details</h2>
+
+<?php
+echo "Employee No: " . $_SESSION['eno'] . "<br>";
+echo "Employee Name: " . $_SESSION['ename'] . "<br>";
+echo "Address: " . $_SESSION['address'] . "<br><br>";
+
+echo "Basic Salary: " . $basic . "<br>";
+echo "DA: " . $da . "<br>";
+echo "HRA: " . $hra . "<br><br>";
+
+echo "<b>Total Salary: " . $total . "</b>";
+?>
+//1
+<?php
+session_start();
+?>
+
+<form method="post" action="emp2.php">
+    <h2>Employee Details</h2>
+
+    Eno: <input type="text" name="eno" required><br><br>
+    Ename: <input type="text" name="ename" required><br><br>
+    Address: <input type="text" name="address" required><br><br>
+
+    <input type="submit" value="Next">
+</form>
+//2
+<?php
+session_start();
+
+// Store page 1 data
+$_SESSION['eno'] = $_POST['eno'];
+$_SESSION['ename'] = $_POST['ename'];
+$_SESSION['address'] = $_POST['address'];
+?>
+
+<form method="post" action="emp3.php">
+    <h2>Salary Details</h2>
+
+    Basic: <input type="number" name="basic" required><br><br>
+    DA: <input type="number" name="da" required><br><br>
+    HRA: <input type="number" name="hra" required><br><br>
+
+    <input type="submit" value="Show Result">
+</form>
+
+//program 2
+import pandas as pd
+import random
+from sklearn.linear_model import LinearRegression
+
+# create dataset
+fish_species = ['Tuna', 'Salmon', 'Trout', 'Bass', 'Sardine', 'Cod', 'Mackerel']
+
+weights = []
+
+for i in range(50):
+    fish_weight = []
+    for j in range(7):
+        weight = random.randint(1, 20)
+        fish_weight.append(weight)
+    weights.append(fish_weight)
+
+df = pd.DataFrame(weights, columns=fish_species)
+
+# independent variables (all except last column)
+X = df.iloc[:, :-1]
+
+# target variable (last column)
+y = df.iloc[:, -1]
+
+# model
+model = LinearRegression()
+model.fit(X, y)
+
+# predict new fish
+new_fish = [[10, 12, 15, 7, 4, 8]]  # 6 inputs (because last column is target)
+
+predicted_weight = model.predict(new_fish)
+
+print("Predicted weight:", predicted_weight)
